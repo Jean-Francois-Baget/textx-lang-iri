@@ -73,14 +73,12 @@ IAuthority[noskipws]:
         @see uri.tx for definition of Port 
         From https://www.ietf.org/rfc/rfc3986.txt (URI) 
         port = *DIGIT
-
-        @note: I put the '@' inside the definition of IUserInfo
-        to be able to distinguish between 'no userinfo' or 'userinfo with empty user'.
-
-        @note: same decision with port and ':'
-
     */
-    (user = IUserInfo)? host = IHost (port = Port)? 
+    (user = IUserInfoAux '@')? host = IHost (':' port = Port)? 
+;
+
+IUserInfoAux[noskipws]:
+    IUserInfo | ''
 ;
 
 IUserInfo[noskipws]:
@@ -96,7 +94,7 @@ IUserInfo[noskipws]:
         @note: the following regexp has been generated using the python program regexp.py.
         In an upcoming version, I intend to use a generator textx2regexp.
     */
-    /([A-Za-z0-9-\._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\U00010000-\U0001FFFD\U00020000-\U0002FFFD\U00030000-\U0003FFFD\U00040000-\U0004FFFD\U00050000-\U0005FFFD\U00060000-\U0006FFFD\U00070000-\U0007FFFD\U00080000-\U0008FFFD\U00090000-\U0009FFFD\U000A0000-\U000AFFFD\U000B0000-\U000BFFFD\U000C0000-\U000CFFFD\U000D0000-\U000DFFFD\U000E1000-\U000EFFFD!\$&'\(\)\*\+,;=:]|%[0-9A-F][0-9A-F])*@/ 
+    /([A-Za-z0-9-\._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\U00010000-\U0001FFFD\U00020000-\U0002FFFD\U00030000-\U0003FFFD\U00040000-\U0004FFFD\U00050000-\U0005FFFD\U00060000-\U0006FFFD\U00070000-\U0007FFFD\U00080000-\U0008FFFD\U00090000-\U0009FFFD\U000A0000-\U000AFFFD\U000B0000-\U000BFFFD\U000C0000-\U000CFFFD\U000D0000-\U000DFFFD\U000E1000-\U000EFFFD!\$&'\(\)\*\+,;=:]|%[0-9A-F][0-9A-F])+/ 
 ;
 
 /*' Adding a quote because my syntax hilighting became mad.*/

@@ -5,7 +5,7 @@ import textxirirefs.iri
 import textxirirefs.uri
 
 
-__VERSION__ = "0.0dev7"
+__VERSION__ = "0.0dev8"
 
 
 __iri_classes__ = [c for c in textxirirefs.iri.__dict__.values() 

@@ -82,14 +82,12 @@ Scheme[noskipws]:
 Authority[noskipws]:
     /*  From https://www.ietf.org/rfc/rfc3986.txt (URI)
         authority = [ userinfo "@" ] host [ ":" port ]
-
-        @note: I put the '@' inside the definition of IUserInfo
-        to be able to distinguish between 'no userinfo' or 'userinfo with empty user'.
-
-        @note: same decision with port and ':'
-
     */
-    (user = UserInfo)? host = Host (port = Port)? 
+    (user = UserInfoAux '@')? host = Host (':' port = PortAux)? 
+;
+
+UserInfoAux[noskipws]:
+    '' | UserInfo
 ;
 
 UserInfo[noskipws]:
@@ -101,7 +99,7 @@ UserInfo[noskipws]:
         @note: the following regexp has been generated using the python program regexp.py.
         In an upcoming version, I intend to use a generator textx2regexp.
     */
-    /([A-Za-z0-9-\._~!\$&'\(\)\*\+,;=:]|%[0-9A-F][0-9A-F])*@/
+    /([A-Za-z0-9-\._~!\$&'\(\)\*\+,;=:]|%[0-9A-F][0-9A-F])+/
 ;
 
 /*' Adding a quote because my syntax hilighting became mad.*/
@@ -194,13 +192,18 @@ RegName[noskipws]:
 
 /*' Adding a quote because my syntax hilighting became mad.*/
 
+
+PortAux[noskipws]:
+    Port | ''
+;
+
 Port[noskipws]:
     /*  From https://www.ietf.org/rfc/rfc3986.txt (URI)
         port = *DIGIT
         From https://www.rfc-editor.org/rfc/rfc2234#section-2.3 (EBNF standard)
         DIGIT =  %x30-39; 0-9
     */
-    /:[0-9]*/
+    /[0-9]+/
 ;
 
 

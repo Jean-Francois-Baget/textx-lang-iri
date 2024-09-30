@@ -27,6 +27,9 @@ class IRIRefContainer():
         result.content = resolved
         resolved.parent = result
         return result
+    
+    def normalize(self):
+        self.content.normalize()
 
 class IRIReference():
 
@@ -59,6 +62,9 @@ class IRIReference():
         if self.isdefined('path'):  
             result.path = self.path.clone(result)
         return result
+    
+    def normalize(self):
+        pass
     
     
 
@@ -165,9 +171,9 @@ class IAuthority():
 
     def recompose(self):
         return '//{user}{host}{port}'.format(
-            user = self.user if self.isdefined('user') else '',
+            user = '{}@'.format(self.user) if self.isdefined('user') else '',
             host = self.host,
-            port = self.port if self.isdefined('port') else ''
+            port = ':{}'.format(self.port) if self.isdefined('port') else ''
         )
     
     def isdefined(self, attrname):
